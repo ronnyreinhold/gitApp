@@ -34,7 +34,9 @@ The app allow you to see the git inside the app using react native webview
 
 ## :star: PrintScren
 
-<img alt="splash_screen" src=".images/1.png" width="200px">
-<img alt="splash_screen" src=".images/1.png" width="200px">
-<img alt="splash_screen" src=".images/1.png" width="200px">
-<img alt="splash_screen" src=".images/1.png" width="200px">
+<p align="center">
+  <img alt="splash_screen" src=".images/1.png" width="200px">
+  <img alt="list_of_user" src=".images/2.png" width="200px">
+  <img alt="user_detail" src=".images/3.png" width="200px">
+  <img alt="git_webview" src=".images/4.png" width="200px">
+</p>
