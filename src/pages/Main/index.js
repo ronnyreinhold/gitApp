@@ -136,7 +136,7 @@ export default class Main extends Component {
                 </ProfileButton>
 
                 <DeleteProfileButton onPress={() => this.alert(item)}>
-                  <Icon name="delete" size={20} color="#fff" />
+                  <Icon name="delete" size={20} color="#f0f0f0" />
                 </DeleteProfileButton>
               </Actions>
             </User>
