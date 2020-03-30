@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Keyboard, ActivityIndicator } from 'react-native';
+import { Keyboard, ActivityIndicator, Alert } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import api from '../../services/api';
@@ -17,6 +17,8 @@ import {
   Bio,
   ProfileButton,
   ProfileButtonText,
+  DeleteProfileButton,
+  Actions,
 } from './styles';
 
 export default class Main extends Component {
@@ -68,10 +70,31 @@ export default class Main extends Component {
     Keyboard.dismiss();
   };
 
-  handleNavigate = user => {
+  handleRemoveUser = async (user) => {
+    const { users } = this.state;
+
+    const newUsers = users.filter((u) => u.login !== user.login);
+
+    this.setState({ users: newUsers });
+  };
+
+  handleNavigate = (user) => {
     const { navigation } = this.props;
 
     navigation.navigate('User', { user });
+  };
+
+  alert = (user) => {
+    Alert.alert('Deletar usuário', `Deseja excluir o usuário ${user.name}?`, [
+      {
+        text: 'Não',
+        style: 'cancel',
+      },
+      {
+        text: 'Sim',
+        onPress: () => this.handleRemoveUser(user),
+      },
+    ]);
   };
 
   render() {
@@ -85,7 +108,7 @@ export default class Main extends Component {
             autoCapitalize="none"
             placeholder="Adicionar usuário"
             value={newUser}
-            onChangeText={text => this.setState({ newUser: text })}
+            onChangeText={(text) => this.setState({ newUser: text })}
             returnKeyType="send"
             onSubmitEditing={this.handleAddUser}
           />
@@ -100,16 +123,22 @@ export default class Main extends Component {
 
         <List
           data={users}
-          keyExtractor={user => user.login}
+          keyExtractor={(user) => user.login}
           renderItem={({ item }) => (
             <User>
               <Avatar source={{ uri: item.avatar }} />
               <Name>{item.name}</Name>
               <Bio>{item.bio}</Bio>
 
-              <ProfileButton onPress={() => this.handleNavigate(item)}>
-                <ProfileButtonText>Ver perfil</ProfileButtonText>
-              </ProfileButton>
+              <Actions>
+                <ProfileButton onPress={() => this.handleNavigate(item)}>
+                  <ProfileButtonText>Ver perfil</ProfileButtonText>
+                </ProfileButton>
+
+                <DeleteProfileButton onPress={() => this.alert(item)}>
+                  <Icon name="delete" size={20} color="#fff" />
+                </DeleteProfileButton>
+              </Actions>
             </User>
           )}
         />

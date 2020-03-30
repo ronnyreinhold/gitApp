@@ -67,7 +67,7 @@ export default class User extends Component {
     this.setState({ refreshing: true, stars: [] }, this.load);
   };
 
-  handleNavigate = repository => {
+  handleNavigate = (repository) => {
     const { navigation } = this.props;
 
     navigation.navigate('Repository', { repository });
@@ -89,7 +89,7 @@ export default class User extends Component {
         ) : (
           <Stars
             data={stars}
-            keyExtractor={star => String(star.id)}
+            keyExtractor={(star) => String(star.id)}
             onRefresh={this.refreshList}
             refreshing={refreshing}
             onEndReachedThreshold={0.2}
